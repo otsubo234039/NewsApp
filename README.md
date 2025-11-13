@@ -40,14 +40,52 @@ NewsAPP/
 
 ## Setup Instructions
 
-### Prerequisites
+### Option 1: Quick Setup with Script (Recommended)
+
+Run the automated setup script:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+This will set up both frontend and backend automatically. Then follow the instructions to add your NewsAPI key and start the servers.
+
+### Option 2: Docker Setup (Easiest for Backend)
+
+For the backend with Docker:
+
+```bash
+# Copy environment file and add your NewsAPI key
+cp .env.example .env
+# Edit .env and add your NewsAPI key
+
+# Start the backend with PostgreSQL
+docker-compose up -d
+
+# The backend will be available at http://localhost:3001
+```
+
+Then set up and run the frontend separately:
+
+```bash
+cd frontend
+cp .env.local.example .env.local
+npm install
+npm run dev
+# Frontend will be at http://localhost:3000
+```
+
+### Option 3: Manual Setup
+
+#### Prerequisites
 
 - Node.js 20+ and npm
 - Ruby 3.2+
 - PostgreSQL
 - NewsAPI key (get one free at [https://newsapi.org/](https://newsapi.org/))
 
-### Backend Setup
+#### Backend Setup
 
 1. Navigate to the backend directory:
 ```bash
