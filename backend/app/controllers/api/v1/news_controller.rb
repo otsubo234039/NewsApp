@@ -26,10 +26,12 @@ class Api::V1::NewsController < ApplicationController
         data = JSON.parse(response.body)
         render json: data
       else
-        render json: { error: "Failed to fetch news", details: response.body }, status: :bad_gateway
+        Rails.logger.error("NewsAPI request failed: #{response.body}")
+        render json: { error: "Failed to fetch news from external API" }, status: :bad_gateway
       end
     rescue => e
-      render json: { error: "Error fetching news: #{e.message}" }, status: :internal_server_error
+      Rails.logger.error("NewsAPI error: #{e.message}")
+      render json: { error: "Unable to fetch news at this time" }, status: :internal_server_error
     end
   end
 end

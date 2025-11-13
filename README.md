@@ -163,6 +163,24 @@ rails db:seed    # Seed database
 ### Frontend (.env.local)
 - `NEXT_PUBLIC_API_URL` - Backend API URL (default: http://localhost:3001)
 
+## Security Considerations
+
+This is a demonstration application. For production use, consider implementing:
+
+1. **Authentication & Authorization**: The app currently uses a default user_id. Implement proper user authentication (e.g., Devise, JWT) and ensure users can only access their own data.
+
+2. **CORS Configuration**: Update `backend/config/initializers/cors.rb` to restrict origins to your production domain instead of allowing localhost.
+
+3. **Rate Limiting**: Implement rate limiting to prevent API abuse, especially for the NewsAPI integration which has usage limits.
+
+4. **Input Validation**: While basic validation is in place, consider adding more comprehensive input sanitization.
+
+5. **HTTPS**: Use HTTPS in production for secure data transmission.
+
+6. **Environment Variables**: Never commit `.env` files with real credentials. Use secure secret management in production.
+
+7. **Database Security**: Ensure your PostgreSQL database has strong passwords and proper access controls.
+
 ## License
 
 This project is open source and available under the MIT License.

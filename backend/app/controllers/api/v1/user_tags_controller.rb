@@ -1,13 +1,18 @@
 class Api::V1::UserTagsController < ApplicationController
   def index
-    user_id = params[:user_id] || 1
+    user_id = params[:user_id]&.to_i || 1
     user_tags = UserTag.where(user_id: user_id).includes(:tag)
     render json: user_tags.as_json(include: :tag)
   end
 
   def create
-    user_id = params[:user_id] || 1
-    tag_id = params[:tag_id]
+    user_id = params[:user_id]&.to_i || 1
+    tag_id = params[:tag_id]&.to_i
+    
+    unless tag_id
+      render json: { errors: ["Tag ID is required"] }, status: :unprocessable_entity
+      return
+    end
     
     user_tag = UserTag.new(user_id: user_id, tag_id: tag_id)
     
@@ -19,7 +24,7 @@ class Api::V1::UserTagsController < ApplicationController
   end
 
   def destroy
-    user_tag = UserTag.find_by(id: params[:id])
+    user_tag = UserTag.find_by(id: params[:id]&.to_i)
     
     if user_tag
       user_tag.destroy
